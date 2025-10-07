@@ -82,11 +82,6 @@ function showPositions(pos) {
 	myMarker.setLatLng(currPos);
 	
 	showTargets(pos);
-	
-	// Repeatadly normalizes the zoom and focus so the user do not get lost in the map.
-	if (tick % 8 == 0) {
-		map.flyTo(currPos, normZoom);
-	}
 }
 
 /**
@@ -278,7 +273,7 @@ map.setView(startPos, startZoom);
 
 // add the OpenStreetMap tiles
 L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
-	maxZoom: 18,
+	maxZoom: 20,
 	attribution: '&copy; <a href="https://openstreetmap.org/copyright">OpenStreetMap contributors</a>'
 }).addTo(map);
 
