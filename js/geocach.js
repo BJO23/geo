@@ -25,7 +25,7 @@ function startGeoLocate() {
 												   timeout: 27000 }
 		);
 		tick++;
-	}, 5000);
+	}, 1000);
   } 
 }
 		
@@ -51,11 +51,12 @@ function showPositionsFst(pos) {
  */
 function showPositions(pos) {
 	// alert("position: {" + pos.coords.latitude + " " + pos.coords.longitude + "}, precision: " + pos.coords.accuracy);
-
-	var oldPos = currPos;
+    
+    var oldPos = positionHist.pop();
 	currPos = new L.LatLng(pos.coords.latitude, pos.coords.longitude);
-	
-	// Close the initial popup which just enlighted the user of representing her. 
+	positionHist.unshift(currPos);
+    
+	// Close the initial popup which just enlighted the user. 
 	myMarkerPop.close();
 	
 	// Set a tooltip showing useful information of the user states.
@@ -71,7 +72,7 @@ function showPositions(pos) {
 	var dist = map.distance(currPos, oldPos);
 	// alert("dist: " + dist);
 
-	if (dist > 2) {
+	if (dist > 1.5) {
 		// Update marker symbol indicating current direction.
 		myMarker.setIcon(getDirectionIcon(currPos, oldPos));
 		traveledDist += dist;
@@ -233,12 +234,12 @@ const q12 = '<p>Det röda pigmentet i Falu Rödffärg som ju kommer från gruvan
             '1: zink<br>x: järn<br>2: koppar<p>';
 
 // Queries to be used
-const queries = [q1, q2, q3, q4, q5, q6, q7, q8, q9, q10];
+const queries = [q1, q2, q3, q4, q5, q6, q7, q8];
 
 // Sets the levels of zoom for the map. A fly in start levels in to a normal state and
 // from there the use may choose up to the max level.
 const startZoom = 10;
-const normZoom = 16;
+const normZoom = 19;
 const maxZoom = 20;
 
 // Sets the positions of the start and the end point for the journey. 
@@ -251,19 +252,18 @@ const arrowImgs = ['images/black_arrow_e.png', 'images/black_arrow_ne.png', 'ima
 				   
 // Defines the map targets with positions, icons, activated when in range 
 var mapTargets = [
-	{ marker: L.marker({ lat: 60.596261, lng: 15.607463}, {icon: createIcon('images/pin1.png',  30)}), range: 50, query: 0 },
-	{ marker: L.marker({ lat: 60.599042, lng: 15.598097}, {icon: createIcon('images/pin2.png',  30)}), range: 50, query: 1 },
-	{ marker: L.marker({ lat: 60.598123, lng: 15.583205}, {icon: createIcon('images/pin3.png',  30)}), range: 50, query: 2 },
-	{ marker: L.marker({ lat: 60.597282, lng: 15.576103}, {icon: createIcon('images/pin4.png',  30)}), range: 50, query: 3 },
-	{ marker: L.marker({ lat: 60.600917, lng: 15.573828}, {icon: createIcon('images/pin5.png',  30)}), range: 50, query: 4 },
-	{ marker: L.marker({ lat: 60.603991, lng: 15.561962}, {icon: createIcon('images/pin6.png',  30)}), range: 50, query: 5 },
-	{ marker: L.marker({ lat: 60.607448, lng: 15.558186}, {icon: createIcon('images/pin7.png',  30)}), range: 50, query: 6 },
-	{ marker: L.marker({ lat: 60.612082, lng: 15.552950}, {icon: createIcon('images/pin8.png',  30)}), range: 50, query: 7 },
-	{ marker: L.marker({ lat: 60.616386, lng: 15.547113}, {icon: createIcon('images/pin9.png',  30)}), range: 50, query: 8 },
-	{ marker: L.marker({ lat: 60.613908, lng: 15.535913}, {icon: createIcon('images/pin10.png', 30)}), range: 50, query: 9 },
+	{ marker: L.marker({ lat: 60.617693, lng: 15.657063}, {icon: createIcon('images/pin1.png',  20)}), range: 10, query: 0 },
+	{ marker: L.marker({ lat: 60.617470, lng: 15.656558}, {icon: createIcon('images/pin2.png',  20)}), range: 10, query: 1 },
+	{ marker: L.marker({ lat: 60.617290, lng: 15.657100}, {icon: createIcon('images/pin3.png',  20)}), range: 10, query: 2 },
+	{ marker: L.marker({ lat: 60.617132, lng: 15.656564}, {icon: createIcon('images/pin4.png',  20)}), range: 10, query: 3 },
+	{ marker: L.marker({ lat: 60.617701, lng: 15.656548}, {icon: createIcon('images/pin5.png',  20)}), range: 10, query: 4 },
+	{ marker: L.marker({ lat: 60.617535, lng: 15.657036}, {icon: createIcon('images/pin6.png',  20)}), range: 10, query: 5 },
+	{ marker: L.marker({ lat: 60.617329, lng: 15.656531}, {icon: createIcon('images/pin7.png',  20)}), range: 10, query: 6 },
+	{ marker: L.marker({ lat: 60.617182, lng: 15.657041}, {icon: createIcon('images/pin8.png',  20)}), range: 10, query: 7 },
 ];
 							   
 var currPos = new L.LatLng(0, 0);
+var positionHist = [currPos, currPos, currPos, currPos, currPos];
 var positionIcons = [];
 var traveledDist = 0;
 var tick = 0;
