@@ -282,45 +282,6 @@ for (var img of arrowImgs) {
 	var icon = createIcon(img, size = 20, yOffset = 0, zOffset = 5);
 	positionIcons.push(icon);
 }
-	
-// Later work!!
-// Replace the circles below with markers. For that a new icon image is needed.
-
-// Puts a red thick cirkle on the map centering the start position of the journey.
-L.circle(startPos, {
-		color: 'red',
-		weight: 4,
-		fillColor: '#faa',
-		fillOpacity: 0.15,
-		radius: 50
-}).addTo(map);
-
-// Puts a blue wide cirkle around the red to light it up.
-L.circle(startPos, {
-		color: 'blue',
-		weight: 2,
-		// fillColor: '#faa',
-		fillOpacity: 0,
-		radius: 100
-}).addTo(map).bindTooltip("<p>Samling vid gruvan kl 09:00, start 09:15</p>");
-
-// Puts a red thick cirkle on the map centering the end position of the journey.
-L.circle(EndPos, {
-		color: 'red',
-		weight: 4,
-		//fillColor: '#faa',
-		fillOpacity: 0.15,
-		radius: 50
-}).addTo(map);
-
-// Puts a blue wide cirkle around the red to light it up.
-L.circle(EndPos, {
-		color: 'blue',
-		weight: 2,
-		fillColor: '#faa',
-		fillOpacity: 0,
-		radius: 100
-}).addTo(map).bindTooltip("<p>Målgång i Puttbo och lunch.</p>");
 
 // Puts all predefined target markers on the map.
 for (var targ of mapTargets) {
